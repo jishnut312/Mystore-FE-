@@ -1,0 +1,26 @@
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  z-index: 10;
+}
+.pr{
+  margin-right: 40px;
+  margin-top: 10px; }
+.cart-animate {
+   animation: shake 0.5s ease-in-out;
+  animation-fill-mode: both;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+.navbar-nav .dropdown:hover .dropdown-menu {
+  display: block;
+}
