@@ -30,7 +30,7 @@ const Home = () => {
     if (!searchQuery.trim()) return;
 
     setLoading(true);
-    axios.get(`http://127.0.0.1:8000/api/products/?search=${searchQuery}`)
+    axios.get(`https://mystore-be.onrender.com/api/products/?search=${searchQuery}`)
       .then(res => setSearchResults(res.data))
       .catch(err => console.log(err))
       .finally(() => setLoading(false));
