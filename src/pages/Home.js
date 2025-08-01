@@ -16,7 +16,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/products/')
+    axios.get('https://mystore-be.onrender.com/api/products/')
       .then(res => {
         const shuffled = shuffleArray(res.data);
         setRandomProducts(shuffled.slice(0, 4));
