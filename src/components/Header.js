@@ -164,18 +164,21 @@ const Header = () => {
             )}
 
             {/* Cart */}
-            <Link
-              to="/cart"
-              className="position-absolute top-0 end-0 mt-2 me-1 nav-link"
-              style={{ zIndex: 1000 }}
-            >
-              <i id="cart-icon" className={`bi bi-cart fs-4 ${animateCart ? 'cart-animate' : ''}`}></i>
-              {cartItems.length > 0 && (
-                <span className="cart-badge badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
-                  {cartItems.length}
-                </span>
-              )}
-            </Link>
+           {user && (
+  <Link
+    to="/cart"
+    className="position-absolute top-0 end-0 mt-2 me-1 nav-link"
+    style={{ zIndex: 1000 }}
+  >
+    <i id="cart-icon" className={`bi bi-cart fs-4 ${animateCart ? 'cart-animate' : ''}`}></i>
+    {cartItems.length > 0 && (
+      <span className="cart-badge badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
+        {cartItems.length}
+      </span>
+    )}
+  </Link>
+)}
+
           </div>
         </div>
       </div>
