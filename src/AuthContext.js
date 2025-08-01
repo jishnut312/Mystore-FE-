@@ -18,18 +18,21 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const register = async (email, password, username) => {
-    try {
-      const response = await axios.post('https://mystore-be.onrender.com/api/users/register/', {
-        username,
-        email,
-        password,
-      });
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.error || 'Registration failed';
-      throw new Error(message);
-    }
-  };
+  try {
+    const response = await axios.post('https://mystore-be.onrender.com/api/users/register/', {
+      username,
+      email,
+      password,
+    });
+    console.log("Backend register response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Backend register error:", error.response?.data || error.message);
+    const message = error.response?.data?.error || 'Registration failed';
+    throw new Error(message);
+  }
+};
+
 
   const login = async (email, password) => {
     try {

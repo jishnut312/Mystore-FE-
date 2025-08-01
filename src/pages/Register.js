@@ -11,15 +11,18 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      await register(email, password, username);
-      alert("Registered successfully!");
-      navigate('/login');
-    } catch (err) {
-      alert("Registration failed.");
-    }
-  };
+  e.preventDefault();
+  try {
+    console.log('Registering:', username, email, password);
+    await register(email, password, username);
+    alert("Registered successfully!");
+    navigate('/login');
+  } catch (err) {
+    console.error("Registration failed:", err.message);
+    alert("Registration failed.");
+  }
+};
+
 
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
