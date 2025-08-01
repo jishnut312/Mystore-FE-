@@ -9,7 +9,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/products/category/${slug}/`);
+        const response = await fetch(`https://mystore-be.onrender.com/api/products/category/${slug}/`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -52,7 +52,7 @@ const CategoryPage = () => {
               >
                 <div className="card h-100">
                   <img
-                    src={`http://localhost:8000${product.image}`}
+                    src={`https://mystore-be.onrender.com${product.image}`}
                     alt={product.name}
                     className="card-img-top"
                   />

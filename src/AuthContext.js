@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password, username) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users/register/', {
+      const response = await axios.post('https://mystore-be.onrender.com/api/users/register/', {
         username,
         email,
         password,
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users/login/', {
+      const response = await axios.post('https://mystore-be.onrender.com/api/users/login/', {
         email,
         password,
       });

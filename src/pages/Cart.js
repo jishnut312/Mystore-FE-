@@ -29,7 +29,7 @@ const Cart = () => {
 console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2));
 
     try {
-      const response = await fetch('http://localhost:8000/api/orders/create-checkout-session/', {
+      const response = await fetch('https://mystore-be.onrender.com/api/orders/create-checkout-session/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
