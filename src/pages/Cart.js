@@ -1,8 +1,14 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../components/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const {
     cartItems,
     removeFromCart,
@@ -60,6 +66,25 @@ console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2)
   if (cartItems.length === 0) {
     return <p className="text-center mt-5">Your cart is empty.</p>;
   }
+
+
+  const handleProceed = async () => {
+  try {
+    const res = await axios.get('/user/has-address/');
+
+    if (res.data.has_address) {
+      // User already has address, skip checkout page
+      handleCheckout(); // send to Stripe or order placement directly
+    } else {
+      // No address found, go to Checkout page
+      navigate('/checkout');
+    }
+  } catch (err) {
+    console.error("Failed to check address", err);
+    // fallback to checkout
+    navigate('/checkout');
+  }
+};
 
   return (
     <div className="container mt-5">
@@ -137,9 +162,8 @@ console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2)
 
       <div className="d-flex justify-content-between align-items-center">
         <h5>Total: ₹{totalAmount}</h5>
-        <button onClick={handleCheckout} className="btn btn-primary">
-          Proceed to Checkout
-        </button>
+       <button onClick=  {handleProceed} className="btn btn-primary">Proceed to Checkout</button>
+
       </div>
     </div>
   );

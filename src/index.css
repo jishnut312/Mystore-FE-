@@ -22,3 +22,84 @@ code {
 .cart-animate {
   animation: shake 0.4s ease;
 }
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 1200px;
+}
+
+
+
+/* Home.css */
+
+/* Mobile devices (max width 576px) */
+@media (max-width: 576px) {
+  .homepage-banner {
+    height: 60vh !important;
+    padding: 1.5rem !important;
+    text-align: center;
+  }
+
+  .slideshow-image {
+    height: 220px !important;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+  }
+}
+
+/* Tablets (577px to 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .homepage-banner {
+    height: 65vh;
+  }
+
+  .slideshow-image {
+    height: 300px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* Laptops (769px to 992px) */
+@media (min-width: 769px) and (max-width: 992px) {
+  .homepage-banner {
+    height: 75vh;
+  }
+
+  .slideshow-image {
+    height: 350px;
+  }
+}
+
+/* Desktops and larger (1200px and up) */
+@media (min-width: 1200px) {
+  .homepage-banner {
+    height: 85vh;
+  }
+
+  .slideshow-image {
+    height: 400px;
+  }
+}
+.slideshow-wrapper {
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  .slideshow-wrapper {
+    min-height: 500px;
+  }
+}

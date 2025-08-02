@@ -13,7 +13,7 @@ import SearchResults from './pages/SearchResults';
 import CategoryPage from './pages/CategoryPage';
 import AddedToCart from './pages/AddedToCart';
 import About from './pages/About';
-
+import Checkout from './pages/Checkout';
 
 function App() {
   const { user, logout } = useContext(AuthContext);
@@ -35,6 +35,7 @@ function App() {
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/added-to-cart" element={<AddedToCart />} />
           <Route path="/about" element={<About />} />
+          <Route path="/checkout" element={<Checkout />} />
 
 
 
