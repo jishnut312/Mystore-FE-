@@ -58,7 +58,7 @@ const ProductDetails = () => {
           <p className="fw-bold fs-4 text-success">₹{product.price}</p>
 
           {/* Add to Cart Button */}
-                    <button
+  <button className='btn btn-primary '
   onClick={() => {
     addToCart(product);
     navigate('/added-to-cart', { state: { product } });

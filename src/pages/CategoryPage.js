@@ -27,7 +27,7 @@ const CategoryPage = () => {
         className="mb-5 rounded"
         style={{
           backgroundImage: "url('/images/category.jpg')",
-          height: '300px',
+          height: '150px',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderRadius: '1rem',

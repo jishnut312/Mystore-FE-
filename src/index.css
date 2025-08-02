@@ -18,6 +18,10 @@ code {
   75% { transform: translateX(-4px); }
   100% { transform: translateX(0); }
 }
+.navbar-toggler {
+  position: relative;
+  z-index: 1050; /* Bootstrap default z-index for navbar toggler */
+}
 
 .cart-animate {
   animation: shake 0.4s ease;

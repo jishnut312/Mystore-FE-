@@ -92,7 +92,7 @@ console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2)
         className="mb-5 rounded"
         style={{
           backgroundImage: "url('/images/cart.jpg')",
-          height: '350px',
+          height: '250px',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderRadius: '1rem',
@@ -105,7 +105,7 @@ console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2)
           textShadow: '2px 2px 5px rgba(0,0,0,0.5)',
         }}
       >
-        Cart
+        
       </div>
 
       <ul className="list-group mb-4">
