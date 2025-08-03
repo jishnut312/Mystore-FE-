@@ -150,9 +150,17 @@ const Header = () => {
 
                 {showDropdown && (
                   <div className="dropdown-menu dropdown-menu-end show mt-1">
-                    <button className="dropdown-item text-danger" onClick={logout}>
-                      Logout
-                    </button>
+                    <button
+  className="dropdown-item text-danger"
+  onClick={() => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      logout();
+    }
+  }}
+>
+  Logout
+</button>
+
                   </div>
                 )}
               </div>
