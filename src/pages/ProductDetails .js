@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api';
 import { CartContext } from '../components/CartContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 
@@ -13,7 +13,8 @@ const ProductDetails = () => {
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  
+  const location = useLocation();
+
   useEffect(() => {
     api.get(`products/${id}/`)
       .then(res => {
@@ -60,9 +61,15 @@ const ProductDetails = () => {
           {/* Add to Cart Button */}
   <button className='btn btn-primary '
   onClick={() => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    navigate('/login', { state: { from: location.pathname } });
+  } else {
     addToCart(product);
     navigate('/added-to-cart', { state: { product } });
-  }}
+  }
+}}
+
 >
   Add to Cart
 </button>

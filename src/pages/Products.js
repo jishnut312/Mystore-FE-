@@ -27,7 +27,6 @@ const Products = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">All Products</h2>
       <div
         className="mb-5 rounded"
         style={{
@@ -44,7 +43,7 @@ const Products = () => {
           fontSize: '2rem',
           textShadow: '2px 2px 5px rgba(0,0,0,0.5)',
         }}
-      >
+      >All Products
       </div>
 
       <div className="row">
