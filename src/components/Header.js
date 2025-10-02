@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import { CartContext } from '../components/CartContext';
+import { WishlistContext } from './WishlistContext';
 import '../styles/Header.css';
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
+  const { wishlistItems } = useContext(WishlistContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [animateCart, setAnimateCart] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -171,7 +173,23 @@ const Header = () => {
               </>
             )}
 
-            {/* Cart */}
+              {/* Wishlist */}
+             {user && (
+    <Link
+      to="/wishlist"
+      className="position-absolute top-0 end-0 mt-2 me-5 nav-link"
+      style={{ zIndex: 1000, right: '3rem' }}
+    >
+      <i className="bi bi-heart fs-4 text-danger"></i>
+      {wishlistItems.length > 0 && (
+        <span className="cart-badge badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
+          {wishlistItems.length}
+        </span>
+      )}
+    </Link>
+  )}
+
+              {/* Cart */}
            {user && (
   <Link
     to="/cart"

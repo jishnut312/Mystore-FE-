@@ -9,6 +9,7 @@ import { AuthContext } from './AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ProductDetails from './pages/ProductDetails ';
+import Wishlist from './pages/Wishlist';
 import SearchResults from './pages/SearchResults';
 import CategoryPage from './pages/CategoryPage';
 import AddedToCart from './pages/AddedToCart';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/added-to-cart" element={<AddedToCart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/about" element={<About />} />
           <Route path="/checkout" element={<Checkout />} />
 

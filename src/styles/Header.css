@@ -24,3 +24,123 @@
 .navbar-nav .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+/* Wishlist heart on product cards */
+.product-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.heart-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 9999;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease;
+  overflow: visible; /* allow burst dots to show outside */
+}
+
+.heart-btn:hover { transform: scale(1.05); }
+
+.heart-btn .bi {
+  font-size: 1.05rem;
+  color: #dc3545; /* bootstrap danger (red) */
+}
+
+.heart-btn.outline .bi { color: #6c757d; }
+
+/* pop animation when toggled */
+.heart-pop {
+  animation: heart-pop 280ms cubic-bezier(.2,.9,.3,1);
+}
+@keyframes heart-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* Button active/pulse state */
+.heart-btn {
+  transition: transform 180ms ease, background 180ms ease, box-shadow 260ms ease;
+}
+.heart-btn.active {
+  transform: scale(1.05);
+  background: rgba(220,53,69,0.09);
+  box-shadow: 0 6px 14px rgba(220,53,69,0.12);
+}
+.heart-btn.active .bi {
+  transform: scale(1.15);
+}
+
+/* subtle pulse to draw attention */
+.heart-pulse {
+  animation: heart-pulse 420ms ease-out;
+}
+@keyframes heart-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(220,53,69,0.18); }
+  70% { box-shadow: 0 8px 24px 8px rgba(220,53,69,0.06); }
+  100% { box-shadow: 0 0 0 0 rgba(220,53,69,0); }
+}
+
+/* Flipkart-like burst/confetti for wishlist */
+.heart-btn .burst {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.heart-btn .burst .dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  opacity: 0;
+}
+.heart-btn .burst .dot.d1 { background: #ffb400; }
+.heart-btn .burst .dot.d2 { background: #6ee7b7; }
+.heart-btn .burst .dot.d3 { background: #60a5fa; }
+.heart-btn .burst .dot.d4 { background: #f472b6; }
+.heart-btn .burst .dot.d5 { background: #f87171; }
+.heart-btn .burst .dot.d6 { background: #f59e0b; }
+
+.heart-btn.burst .dot {
+  animation: burst-move 520ms ease-out forwards;
+}
+.heart-btn.burst .dot.d1 { transform: translate(0,0); animation-delay: 0ms; }
+.heart-btn.burst .dot.d2 { transform: translate(0,0); animation-delay: 20ms; }
+.heart-btn.burst .dot.d3 { transform: translate(0,0); animation-delay: 40ms; }
+.heart-btn.burst .dot.d4 { transform: translate(0,0); animation-delay: 60ms; }
+.heart-btn.burst .dot.d5 { transform: translate(0,0); animation-delay: 80ms; }
+.heart-btn.burst .dot.d6 { transform: translate(0,0); animation-delay: 100ms; }
+
+@keyframes burst-move {
+  0% { opacity: 1; transform: translate(0,0) scale(1); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.8); }
+}
+
+/* set directions for each dot using custom properties */
+.heart-btn .burst .dot.d1 { --tx: -20px; --ty: -28px; }
+.heart-btn .burst .dot.d2 { --tx: 20px; --ty: -26px; }
+.heart-btn .burst .dot.d3 { --tx: 26px; --ty: 6px; }
+.heart-btn .burst .dot.d4 { --tx: 8px; --ty: 28px; }
+.heart-btn .burst .dot.d5 { --tx: -18px; --ty: 20px; }
+.heart-btn .burst .dot.d6 { --tx: -30px; --ty: 4px; }
+
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: visible; /* allow burst to show outside image bounds */
+}
+

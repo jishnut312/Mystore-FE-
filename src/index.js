@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { CartProvider } from './components/CartContext';
+import { WishlistProvider } from './components/WishlistContext';
 import { AuthProvider } from './AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +14,9 @@ root.render(
   
   <AuthProvider>
    <CartProvider>
-    <App />
+    <WishlistProvider>
+      <App />
+    </WishlistProvider>
   </CartProvider>
   </AuthProvider>
 );
