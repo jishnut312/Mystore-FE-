@@ -11,6 +11,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [animatingHeart, setAnimatingHeart] = useState(false);
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useContext(WishlistContext);
   const navigate = useNavigate();
@@ -48,56 +49,49 @@ const ProductDetails = () => {
               style={{ maxHeight: '400px', objectFit: 'contain' }}
             />
 
-            {/* Heart button overlay (top-right) */}
+            {/* Enhanced Heart button with animation */}
             <button
-              className={`heart-btn ${isInWishlist(product.id) ? '' : 'outline'}`}
+              className={`heart-btn ${isInWishlist(product.id) ? '' : 'outline'} ${animatingHeart ? 'heart-animate' : ''}`}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                const btn = e.currentTarget;
-                btn.classList.add('active');
-                btn.classList.add('heart-pulse');
-                setTimeout(() => btn.classList.remove('active'), 220);
-                setTimeout(() => btn.classList.remove('heart-pulse'), 420);
 
                 const token = localStorage.getItem('authToken');
                 if (!token) {
                   navigate('/login', { state: { from: location.pathname } });
                   return;
                 }
+                
                 const adding = !isInWishlist(product.id);
                 console.log('wishlist click (details) - adding:', adding, 'productId:', product.id);
-                if (isInWishlist(product.id)) {
-                  removeFromWishlist(product.id);
-                } else {
-                  addToWishlist(product);
-                }
-
-                // burst only when adding
+                
                 if (adding) {
-                  btn.classList.add('burst');
-                  setTimeout(() => btn.classList.remove('burst'), 520);
-                }
-
-                const icon = btn.querySelector('.bi');
-                if (icon) {
-                  icon.classList.remove('heart-pop');
-                  void icon.offsetWidth;
-                  icon.classList.add('heart-pop');
+                  // Trigger animation for adding to wishlist
+                  setAnimatingHeart(true);
+                  addToWishlist(product);
+                  
+                  // Remove animation state after animation completes
+                  setTimeout(() => {
+                    setAnimatingHeart(false);
+                  }, 800);
+                } else {
+                  removeFromWishlist(product.id);
                 }
               }}
               aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
               title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
             >
-              <i className={`bi ${isInWishlist(product.id) ? 'bi-heart-fill' : 'bi-heart'}`}></i>
-              <span className="burst">
-                <span className="dot d1"></span>
-                <span className="dot d2"></span>
-                <span className="dot d3"></span>
-                <span className="dot d4"></span>
-                <span className="dot d5"></span>
-                <span className="dot d6"></span>
-              </span>
+              <i className={`bi ${isInWishlist(product.id) ? 'bi-heart-fill' : 'bi-heart'} ${animatingHeart ? 'heart-pop' : ''}`}></i>
+              {animatingHeart && (
+                <span className="burst">
+                  <span className="dot d1"></span>
+                  <span className="dot d2"></span>
+                  <span className="dot d3"></span>
+                  <span className="dot d4"></span>
+                  <span className="dot d5"></span>
+                  <span className="dot d6"></span>
+                </span>
+              )}
             </button>
           </div>
         </div>

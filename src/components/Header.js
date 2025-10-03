@@ -66,10 +66,13 @@ const Header = () => {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light modern-navbar shadow-sm">
       <div className="container position-relative">
         {/* Brand */}
-        <Link className="navbar-brand fw-bold me-3" to="/">MyStore</Link>
+        <Link className="navbar-brand modern-brand fw-bold me-3" to="/">
+          <i className="bi bi-bag-heart me-2"></i>
+          MyStore
+        </Link>
 
         {/* Toggler for mobile */}
         <button
@@ -81,21 +84,26 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Search */}
+        {/* Enhanced Search */}
         {isHome && (
           <form
-            className="d-none d-lg-flex position-absolute start-50 translate-middle-x"
+            className="d-none d-lg-flex position-absolute start-50 translate-middle-x modern-search"
             onSubmit={handleSearch}
-            style={{ width: '300px' }}
+            style={{ width: '350px' }}
           >
-            <input
-              className="form-control form-control-sm me-2"
-              type="search"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="btn btn-sm btn-primary" type="submit">Search</button>
+            <div className="search-container">
+              <i className="bi bi-search search-icon"></i>
+              <input
+                className="form-control search-input"
+                type="search"
+                placeholder="Search for products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button className="btn search-btn" type="submit">
+                <i className="bi bi-arrow-right"></i>
+              </button>
+            </div>
           </form>
         )}
 
@@ -137,74 +145,61 @@ const Header = () => {
             </li>
           </ul>
 
-          {/* Right side: Auth & Cart */}
-          <div className="d-flex align-items-center ms-auto mt-2 mt-lg-0 position-relative ">
+          {/* Right side: Auth & Icons */}
+          <div className="d-flex align-items-center ms-auto mt-2 mt-lg-0 gap-3">
             {/* Profile/Login */}
             {user ? (
-              <div className="dropdown text-end me-5 " ref={dropdownRef}>
+              <div className="dropdown" ref={dropdownRef}>
                 <div
-  className="d-flex align-items-center dropdown-toggle cursor-pointer profile-wrapper pr"
-  onClick={() => setShowDropdown(!showDropdown)}
->
-  <i className="bi bi-person-circle fs-4 text-primary me-1"></i>
-  <span className="username-text">{user.username || user}</span>
-</div>
+                  className="d-flex align-items-center dropdown-toggle cursor-pointer profile-wrapper"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                >
+                  <i className="bi bi-person-circle fs-5 text-primary me-2"></i>
+                  <span className="username-text d-none d-md-inline">{user.username || user}</span>
+                </div>
 
                 {showDropdown && (
-                  <div className="dropdown-menu dropdown-menu-end show mt-1">
+                  <div className="dropdown-menu dropdown-menu-end show mt-2">
                     <button
-  className="dropdown-item text-danger"
-  onClick={() => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      logout();
-    }
-  }}
->
-  Logout
-</button>
-
+                      className="dropdown-item text-danger"
+                      onClick={() => {
+                        if (window.confirm('Are you sure you want to logout?')) {
+                          logout();
+                        }
+                      }}
+                    >
+                      <i className="bi bi-box-arrow-right me-2"></i>
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>
             ) : (
-              <>
-                <Link className="btn btn-sm btn-outline-primary me-2" to="/login">Login</Link>
-                <Link className="btn btn-sm btn-primary me-2" to="/register">Register</Link>
-              </>
+              <div className="d-flex gap-2">
+                <Link className="btn btn-sm btn-outline-primary" to="/login">Login</Link>
+                <Link className="btn btn-sm btn-primary" to="/register">Register</Link>
+              </div>
             )}
 
-              {/* Wishlist */}
-             {user && (
-    <Link
-      to="/wishlist"
-      className="position-absolute top-0 end-0 mt-2 me-5 nav-link"
-      style={{ zIndex: 1000, right: '3rem' }}
-    >
-      <i className="bi bi-heart fs-4 text-danger"></i>
-      {wishlistItems.length > 0 && (
-        <span className="cart-badge badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
-          {wishlistItems.length}
-        </span>
-      )}
-    </Link>
-  )}
+            {/* Action Icons */}
+            {user && (
+              <div className="d-flex align-items-center gap-2">
+                {/* Wishlist */}
+                <Link to="/wishlist" className="icon-wrapper wishlist-icon">
+                  <i className="bi bi-heart"></i>
+                  <span className="icon-tooltip">Wishlist</span>
+                </Link>
 
-              {/* Cart */}
-           {user && (
-  <Link
-    to="/cart"
-    className="position-absolute top-0 end-0 mt-2 me-1 nav-link"
-    style={{ zIndex: 1000 }}
-  >
-    <i id="cart-icon" className={`bi bi-cart fs-4 ${animateCart ? 'cart-animate' : ''}`}></i>
-    {cartItems.length > 0 && (
-      <span className="cart-badge badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
-        {cartItems.length}
-      </span>
-    )}
-  </Link>
-)}
-
+                {/* Cart */}
+                <Link to="/cart" className="icon-wrapper cart-icon position-relative">
+                  <i className={`bi bi-cart ${animateCart ? 'cart-animate' : ''}`}></i>
+                  {cartItems.length > 0 && (
+                    <span className="cart-badge">{cartItems.length}</span>
+                  )}
+                  <span className="icon-tooltip">Cart</span>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

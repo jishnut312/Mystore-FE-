@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import api from '../api';
 import { CartContext } from '../components/CartContext';
 import { WishlistContext } from '../components/WishlistContext';
 import { Link } from 'react-router-dom'; // make sure this is imported
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [animatingHearts, setAnimatingHearts] = useState(new Set());
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useContext(WishlistContext);
 
@@ -62,54 +64,47 @@ const Products = () => {
                   />
                 </Link>
 
-                {/* Heart button overlay */}
+                {/* Enhanced Heart button with animation */}
                 <button
-                className={`heart-btn ${isInWishlist(product.id) ? '' : 'outline'}`}
+                className={`heart-btn ${isInWishlist(product.id) ? '' : 'outline'} ${animatingHearts.has(product.id) ? 'heart-animate' : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  const btn = e.currentTarget;
-                  // briefly mark active for visual feedback
-                  btn.classList.add('active');
-                  btn.classList.add('heart-pulse');
-                  setTimeout(() => {
-                    btn.classList.remove('active');
-                  }, 220);
-                  setTimeout(() => {
-                    btn.classList.remove('heart-pulse');
-                  }, 420);
-
+                  
                   const adding = !isInWishlist(product.id);
                   console.log('wishlist click (products) - adding:', adding, 'productId:', product.id);
-                  if (isInWishlist(product.id)) removeFromWishlist(product.id);
-                  else addToWishlist(product);
-
-                  // trigger burst only when adding
+                  
                   if (adding) {
-                    btn.classList.add('burst');
-                    setTimeout(() => btn.classList.remove('burst'), 520);
-                  }
-
-                  // icon pop
-                  const el = btn.querySelector('.bi');
-                  if (el) {
-                    el.classList.remove('heart-pop');
-                    void el.offsetWidth;
-                    el.classList.add('heart-pop');
+                    // Trigger animation for adding to wishlist
+                    setAnimatingHearts(prev => new Set([...prev, product.id]));
+                    addToWishlist(product);
+                    
+                    // Remove animation state after animation completes
+                    setTimeout(() => {
+                      setAnimatingHearts(prev => {
+                        const newSet = new Set(prev);
+                        newSet.delete(product.id);
+                        return newSet;
+                      });
+                    }, 800);
+                  } else {
+                    removeFromWishlist(product.id);
                   }
                 }}
                 aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
                 title={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
               >
-                <i className={`bi ${isInWishlist(product.id) ? 'bi-heart-fill' : 'bi-heart'}`}></i>
-                <span className="burst">
-                  <span className="dot d1"></span>
-                  <span className="dot d2"></span>
-                  <span className="dot d3"></span>
-                  <span className="dot d4"></span>
-                  <span className="dot d5"></span>
-                  <span className="dot d6"></span>
-                </span>
+                <i className={`bi ${isInWishlist(product.id) ? 'bi-heart-fill' : 'bi-heart'} ${animatingHearts.has(product.id) ? 'heart-pop' : ''}`}></i>
+                {animatingHearts.has(product.id) && (
+                  <span className="burst">
+                    <span className="dot d1"></span>
+                    <span className="dot d2"></span>
+                    <span className="dot d3"></span>
+                    <span className="dot d4"></span>
+                    <span className="dot d5"></span>
+                    <span className="dot d6"></span>
+                  </span>
+                )}
                 </button>
               </div>
 
