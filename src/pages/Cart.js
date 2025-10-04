@@ -123,8 +123,7 @@ console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2)
 
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = subtotal > 500 ? 0 : 50;
-  const tax = subtotal * 0.18; // 18% GST
-  const totalAmount = subtotal + shipping + tax;
+  const totalAmount = subtotal + shipping;
 
   return (
     <div className="cart-page">
@@ -225,11 +224,6 @@ console.log("Sending line items to Stripe:", JSON.stringify(line_items, null, 2)
                 <span className={shipping === 0 ? 'text-success' : ''}>
                   {shipping === 0 ? 'FREE' : `₹${shipping}`}
                 </span>
-              </div>
-              
-              <div className="summary-row">
-                <span>GST (18%)</span>
-                <span>₹{tax.toFixed(2)}</span>
               </div>
               
               {shipping === 0 && (
