@@ -17,6 +17,7 @@
     "partycles": "^1.2.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-parallax": "^3.5.2",
     "react-router-dom": "^7.6.3",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",

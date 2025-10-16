@@ -1,0 +1,273 @@
+/* Full-Screen Hero Styles */
+
+.full-screen-hero {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  z-index: 1 !important;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Button Hover Effects */
+.hero-buttons .btn {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.hero-buttons .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+.hero-buttons .btn-light:hover {
+  background-color: #f8f9fa;
+  color: #333;
+  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3) !important;
+}
+
+.hero-buttons .btn-outline-light:hover {
+  background-color: white;
+  color: #333;
+  border-color: white;
+}
+
+/* Scroll Down Animation */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+.scroll-indicator {
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-indicator:hover {
+  opacity: 0.7;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .hero-content h1,
+  .quality-content h1 {
+    font-size: clamp(2rem, 10vw, 3.5rem) !important;
+  }
+  
+  .hero-content p,
+  .quality-content p {
+    font-size: clamp(1rem, 4vw, 1.2rem) !important;
+    padding: 0 1rem;
+  }
+  
+  .hero-buttons,
+  .quality-buttons {
+    padding: 0 1rem;
+  }
+  
+  .hero-buttons .btn,
+  .quality-buttons .btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 1rem;
+  }
+  
+  .scroll-indicator {
+    bottom: 1rem !important;
+  }
+  
+  .quality-features .col-md-4 {
+    margin-bottom: 2rem;
+  }
+  
+  .quality-features .feature-item {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-overlay,
+  .quality-content {
+    padding: 1rem;
+  }
+  
+  .hero-buttons .btn,
+  .quality-buttons .btn {
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem !important;
+    min-width: 250px !important;
+  }
+  
+  .quality-features .feature-item div {
+    font-size: 2rem !important;
+  }
+  
+  .quality-features .feature-item h5 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Performance Optimizations */
+.full-screen-hero {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  z-index: 1 !important;
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading State */
+.hero-loading {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+}
+
+/* Hero Background Overlay Variations */
+.hero-overlay-gradient-1 {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+}
+
+.hero-overlay-gradient-2 {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.hero-overlay-gradient-3 {
+  background: linear-gradient(45deg, rgba(255, 107, 107, 0.6) 0%, rgba(78, 205, 196, 0.6) 100%);
+}
+
+/* Text Glow Effect */
+.hero-title-glow {
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(255, 255, 255, 0.2),
+    0 0 15px rgba(255, 255, 255, 0.1),
+    2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Particle Effect Background (Optional) */
+.hero-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Full-Screen Quality Products Section */
+.full-screen-quality {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  z-index: 1 !important;
+}
+
+.quality-content {
+  position: relative;
+  z-index: 3;
+}
+
+.quality-features .feature-item {
+  transition: all 0.3s ease;
+  padding: 1rem;
+}
+
+.quality-features .feature-item:hover {
+  transform: translateY(-5px);
+}
+
+.quality-features .feature-item div {
+  transition: transform 0.3s ease;
+}
+
+.quality-features .feature-item:hover div {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.quality-buttons .btn {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.quality-buttons .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+.quality-buttons .btn-light:hover {
+  background-color: #f8f9fa;
+  color: #333;
+  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3) !important;
+}
+
+.quality-buttons .btn-outline-light:hover {
+  background-color: white;
+  color: #333;
+  border-color: white;
+}
+
+/* Custom Scrollbar for Hero Section */
+.full-screen-hero::-webkit-scrollbar,
+.full-screen-quality::-webkit-scrollbar {
+  display: none;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator {
+    animation: none;
+  }
+  
+  .hero-buttons .btn {
+    transition: none;
+  }
+  
+  .hero-content * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  .hero-content h1,
+  .hero-content p {
+    text-shadow: 2px 2px 0px #000000;
+  }
+}

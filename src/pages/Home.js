@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Parallax } from 'react-parallax';
 import axios from 'axios';
+import '../styles/FullScreenHero.css';
 
 const shuffleArray = (array) => [...array].sort(() => 0.5 - Math.random());
 
@@ -36,6 +38,13 @@ const Home = () => {
       .finally(() => setLoading(false));
   };
 
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(() => {
     if (slideshowProducts.length > 0) {
       const interval = setInterval(() => {
@@ -47,32 +56,102 @@ const Home = () => {
 
   return (
     <div className="page-wrapper">
-      <div className="container mt-5">
-
-        {/* ✅ Banner Section */}
-        <div
-          className="text-white d-flex align-items-center mb-5"
+      {/* 🌟 Full-Screen Hero Parallax Section */}
+      <Parallax
+        bgImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        strength={400}
+        className="full-screen-hero"
+      >
+        <div 
+          className="hero-overlay d-flex align-items-center justify-content-center text-center text-white"
           style={{
-            backgroundImage: "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/homepage.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '80vh',
-            borderRadius: '12px',
-            padding: '3rem'
+            height: '100vh',
+            background: 'linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6))',
+            position: 'relative'
           }}
         >
           <div className="container">
-            <h1 className="display-4 fw-bold animate__animated animate__fadeInDown">
-              Welcome to MyStore 🛍️
-            </h1>
-            <p className="lead mt-3">
-              {user ? `Hello, ${user}! Ready to shop?` : 'Explore the best products picked just for you.'}
-            </p>
-            <Link to="/products" className="btn btn-light btn-lg mt-3">
-              Browse Products
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2 }}
+              className="hero-content"
+            >
+              <motion.h1 
+                className="display-2 fw-bold mb-4"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                style={{ 
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                  fontSize: 'clamp(2.5rem, 8vw, 5rem)'
+                }}
+              >
+                Welcome to MyStore 🛍️
+              </motion.h1>
+              
+              <motion.p 
+                className="lead mb-5"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6 }}
+                style={{ 
+                  fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+                  maxWidth: '600px',
+                  margin: '0 auto 2rem'
+                }}
+              >
+                {user 
+                  ? `Hello, ${user}! Discover amazing products at unbeatable prices.` 
+                  : 'Discover amazing products at unbeatable prices. Your one-stop shop for everything you need.'
+                }
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.9 }}
+                className="hero-buttons"
+              >
+                <Link 
+                  to="/products" 
+                  className="btn btn-light btn-lg me-3 mb-3"
+                  style={{
+                    padding: '1rem 2.5rem',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    borderRadius: '50px',
+                    boxShadow: '0 8px 25px rgba(255,255,255,0.2)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Shop Now
+                </Link>
+                <Link 
+                  to="/products" 
+                  className="btn btn-outline-light btn-lg mb-3"
+                  style={{
+                    padding: '1rem 2.5rem',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    borderRadius: '50px',
+                    borderWidth: '2px',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Browse Categories
+                </Link>
+              </motion.div>
+              
+              {/* Scroll Down Indicator */}
+             
+            </motion.div>
           </div>
         </div>
+      </Parallax>
+
+      <div className="container mt-5">
         
 
         {/* ✅ Featured Products Slideshow */}
@@ -155,6 +234,151 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Full-Screen Quality Products Parallax Section */}
+        <Parallax
+          bgImage="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
+          strength={300}
+          className="full-screen-quality mb-5"
+        >
+          <div 
+            className="text-white d-flex align-items-center justify-content-center text-center"
+            style={{
+              height: '100vh',
+              background: 'linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7))',
+              position: 'relative'
+            }}
+          >
+            <div className="container">
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                className="quality-content"
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="mb-4"
+                >
+                  <span 
+                    className="badge bg-light text-dark px-4 py-2 mb-4"
+                    style={{ 
+                      fontSize: '1rem', 
+                      borderRadius: '50px',
+                      fontWeight: '500',
+                      letterSpacing: '1px'
+                    }}
+                  >
+                    PREMIUM COLLECTION
+                  </span>
+                </motion.div>
+                
+                <motion.h1 
+                  className="display-1 fw-bold mb-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  style={{ 
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                    fontSize: 'clamp(3rem, 10vw, 6rem)',
+                    lineHeight: '1.1'
+                  }}
+                >
+                  Quality Products
+                </motion.h1>
+                
+                <motion.p 
+                  className="lead mb-5"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  style={{ 
+                    fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+                    maxWidth: '800px',
+                    margin: '0 auto 3rem',
+                    lineHeight: '1.4'
+                  }}
+                >
+                  Discover our carefully curated collection of premium products. 
+                  Every item is handpicked for quality, durability, and style. 
+                  Experience the difference that quality makes.
+                </motion.p>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="quality-features mb-5"
+                >
+                  <div className="row justify-content-center">
+                    <div className="col-md-4 mb-3">
+                      <div className="feature-item">
+                        <div className="mb-2" style={{ fontSize: '2.5rem' }}>✨</div>
+                        <h5 className="fw-bold">Premium Quality</h5>
+                        <p className="mb-0">Handpicked for excellence</p>
+                      </div>
+                    </div>
+                    <div className="col-md-4 mb-3">
+                      <div className="feature-item">
+                        <div className="mb-2" style={{ fontSize: '2.5rem' }}>🛡️</div>
+                        <h5 className="fw-bold">Guaranteed</h5>
+                        <p className="mb-0">100% satisfaction promise</p>
+                      </div>
+                    </div>
+                    <div className="col-md-4 mb-3">
+                      <div className="feature-item">
+                        <div className="mb-2" style={{ fontSize: '2.5rem' }}>🚀</div>
+                        <h5 className="fw-bold">Fast Delivery</h5>
+                        <p className="mb-0">Quick & secure shipping</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                  className="quality-buttons"
+                >
+                  <Link 
+                    to="/products" 
+                    className="btn btn-light btn-lg me-3 mb-3"
+                    style={{
+                      padding: '1rem 2.5rem',
+                      fontSize: '1.1rem',
+                      fontWeight: '600',
+                      borderRadius: '50px',
+                      boxShadow: '0 8px 25px rgba(255,255,255,0.2)',
+                      transition: 'all 0.3s ease',
+                      minWidth: '200px'
+                    }}
+                  >
+                    Explore Collection
+                  </Link>
+                  <Link 
+                    to="/products?featured=true" 
+                    className="btn btn-outline-light btn-lg mb-3"
+                    style={{
+                      padding: '1rem 2.5rem',
+                      fontSize: '1.1rem',
+                      fontWeight: '600',
+                      borderRadius: '50px',
+                      borderWidth: '2px',
+                      transition: 'all 0.3s ease',
+                      minWidth: '200px'
+                    }}
+                  >
+                    Featured Items
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </Parallax>
+
         {/* ✅ Random Products Section */}
         <h3 className="mb-4 text-center">You May Like</h3>
         <div className="row">
@@ -197,6 +421,59 @@ const Home = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Final Statistics Parallax Section */}
+        <Parallax
+          bgImage="https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
+          strength={150}
+          className="mt-5"
+          style={{ borderRadius: '12px', overflow: 'hidden' }}
+        >
+          <div 
+            className="text-white d-flex align-items-center justify-content-center text-center"
+            style={{
+              height: '60vh',
+              background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))',
+              padding: '3rem'
+            }}
+          >
+            <div className="container">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h2 className="display-5 fw-bold mb-4">Join Thousands of Happy Customers</h2>
+                <div className="row">
+                  <div className="col-6 col-md-3">
+                    <div className="mb-3">
+                      <h3 className="display-4 fw-bold">10K+</h3>
+                      <p className="lead">Happy Customers</p>
+                    </div>
+                  </div>
+                  <div className="col-6 col-md-3">
+                    <div className="mb-3">
+                      <h3 className="display-4 fw-bold">500+</h3>
+                      <p className="lead">Products</p>
+                    </div>
+                  </div>
+                  <div className="col-6 col-md-3">
+                    <div className="mb-3">
+                      <h3 className="display-4 fw-bold">50+</h3>
+                      <p className="lead">Categories</p>
+                    </div>
+                  </div>
+                  <div className="col-6 col-md-3">
+                    <div className="mb-3">
+                      <h3 className="display-4 fw-bold">24/7</h3>
+                      <p className="lead">Support</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </Parallax>
       </div>
     </div>
   );
