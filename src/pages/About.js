@@ -51,12 +51,6 @@ const About = () => {
     }
   ];
 
-  const stats = [
-    { number: "50K+", label: "Happy Customers" },
-    { number: "1000+", label: "Products" },
-    { number: "99.9%", label: "Uptime" },
-    { number: "24/7", label: "Support" }
-  ];
 
   return (
     <div className="about-page">
@@ -164,26 +158,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="py-5 bg-primary text-white stats-section">
-        <div className="container">
-          <div className="row text-center">
-            {stats.map((stat, index) => (
-              <div key={index} className="col-6 col-md-3 mb-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="stat-item"
-                >
-                  <h2 className="display-4 fw-bold">{stat.number}</h2>
-                  <p className="lead">{stat.label}</p>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Values Section */}
       <section className="py-5 bg-light">

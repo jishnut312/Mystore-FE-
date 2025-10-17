@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { AuthContext } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Parallax } from 'react-parallax';
 import axios from 'axios';
 import '../styles/FullScreenHero.css';
 
@@ -16,6 +15,8 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const heroImageRef = useRef(null);
+  const qualityImageRef = useRef(null);
 
   useEffect(() => {
     axios.get('https://mystore-be.onrender.com/api/products/')
@@ -25,6 +26,38 @@ const Home = () => {
         setSlideshowProducts(shuffled.slice(0, 8));
       })
       .catch(err => console.log(err));
+  }, []);
+
+  // Custom parallax effect using scroll events
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * -0.3;
+          const rate2 = scrolled * -0.2;
+
+          if (heroImageRef.current) {
+            heroImageRef.current.style.transform = `translate3d(0, ${rate}px, 0)`;
+          }
+          
+          if (qualityImageRef.current) {
+            qualityImageRef.current.style.transform = `translate3d(0, ${rate2}px, 0)`;
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleSearch = (e) => {
@@ -57,17 +90,27 @@ const Home = () => {
   return (
     <div className="page-wrapper">
       {/* 🌟 Full-Screen Hero Parallax Section */}
-      <Parallax
-        bgImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-        strength={400}
-        className="full-screen-hero"
-      >
-        <div 
-          className="hero-overlay d-flex align-items-center justify-content-center text-center text-white"
+      <div className="full-screen-hero position-relative overflow-hidden" style={{ height: '100vh' }}>
+        <img
+          ref={heroImageRef}
+          src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          alt="Hero Background"
           style={{
-            height: '100vh',
+            position: 'absolute',
+            top: '-30%',
+            left: '-10%',
+            width: '120%',
+            height: '160%',
+            objectFit: 'cover',
+            zIndex: -1,
+            willChange: 'transform'
+          }}
+        />
+        <div 
+          className="hero-overlay d-flex align-items-center justify-content-center text-center text-white position-absolute w-100 h-100"
+          style={{
             background: 'linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6))',
-            position: 'relative'
+            zIndex: 1
           }}
         >
           <div className="container">
@@ -149,7 +192,7 @@ const Home = () => {
             </motion.div>
           </div>
         </div>
-      </Parallax>
+      </div>
 
       <div className="container mt-5">
         
@@ -235,17 +278,27 @@ const Home = () => {
         </div>
 
         {/* Full-Screen Quality Products Parallax Section */}
-        <Parallax
-          bgImage="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
-          strength={300}
-          className="full-screen-quality mb-5"
-        >
-          <div 
-            className="text-white d-flex align-items-center justify-content-center text-center"
+        <div className="full-screen-quality mb-5 position-relative overflow-hidden" style={{ height: '100vh' }}>
+          <img
+            ref={qualityImageRef}
+            src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
+            alt="Quality Products Background"
             style={{
-              height: '100vh',
+              position: 'absolute',
+              top: '-30%',
+              left: '-10%',
+              width: '120%',
+              height: '160%',
+              objectFit: 'cover',
+              zIndex: -1,
+              willChange: 'transform'
+            }}
+          />
+          <div 
+            className="text-white d-flex align-items-center justify-content-center text-center position-absolute w-100 h-100"
+            style={{
               background: 'linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7))',
-              position: 'relative'
+              zIndex: 1
             }}
           >
             <div className="container">
@@ -377,7 +430,7 @@ const Home = () => {
               </motion.div>
             </div>
           </div>
-        </Parallax>
+        </div>
 
         {/* ✅ Random Products Section */}
         <h3 className="mb-4 text-center">You May Like</h3>
@@ -422,58 +475,6 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Final Statistics Parallax Section */}
-        <Parallax
-          bgImage="https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
-          strength={150}
-          className="mt-5"
-          style={{ borderRadius: '12px', overflow: 'hidden' }}
-        >
-          <div 
-            className="text-white d-flex align-items-center justify-content-center text-center"
-            style={{
-              height: '60vh',
-              background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))',
-              padding: '3rem'
-            }}
-          >
-            <div className="container">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <h2 className="display-5 fw-bold mb-4">Join Thousands of Happy Customers</h2>
-                <div className="row">
-                  <div className="col-6 col-md-3">
-                    <div className="mb-3">
-                      <h3 className="display-4 fw-bold">10K+</h3>
-                      <p className="lead">Happy Customers</p>
-                    </div>
-                  </div>
-                  <div className="col-6 col-md-3">
-                    <div className="mb-3">
-                      <h3 className="display-4 fw-bold">500+</h3>
-                      <p className="lead">Products</p>
-                    </div>
-                  </div>
-                  <div className="col-6 col-md-3">
-                    <div className="mb-3">
-                      <h3 className="display-4 fw-bold">50+</h3>
-                      <p className="lead">Categories</p>
-                    </div>
-                  </div>
-                  <div className="col-6 col-md-3">
-                    <div className="mb-3">
-                      <h3 className="display-4 fw-bold">24/7</h3>
-                      <p className="lead">Support</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </Parallax>
       </div>
     </div>
   );
