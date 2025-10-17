@@ -22,7 +22,7 @@ const Header = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
     }
   };
@@ -84,7 +84,7 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Enhanced Search */}
+        {/* Enhanced Search - Only on Home Page */}
         {isHome && (
           <form
             className="d-none d-lg-flex position-absolute start-50 translate-middle-x modern-search"
@@ -109,6 +109,28 @@ const Header = () => {
 
         {/* Nav items */}
         <div className="collapse navbar-collapse" id="navbarContent">
+          {/* Mobile Search - Only on Home Page */}
+          {isHome && (
+            <form
+              className="d-lg-none mb-3 mt-2"
+              onSubmit={handleSearch}
+            >
+              <div className="search-container">
+                <i className="bi bi-search search-icon"></i>
+                <input
+                  className="form-control search-input"
+                  type="search"
+                  placeholder="Search for products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button className="btn search-btn" type="submit">
+                  <i className="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </form>
+          )}
+
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 mt-2 mt-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>

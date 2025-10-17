@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api';
 import { CartContext } from '../components/CartContext';
 import { WishlistContext } from '../components/WishlistContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import '../styles/Products.css';
 
@@ -18,6 +18,7 @@ const Products = () => {
   const { addToCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useContext(WishlistContext);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     api.get('products/')
@@ -32,6 +33,14 @@ const Products = () => {
         setLoading(false);
       });
   }, []);
+
+  // Handle URL search parameters
+  useEffect(() => {
+    const urlSearchQuery = searchParams.get('search');
+    if (urlSearchQuery) {
+      setSearchQuery(urlSearchQuery);
+    }
+  }, [searchParams]);
 
   // Filter and sort products
   useEffect(() => {

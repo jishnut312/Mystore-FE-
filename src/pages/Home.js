@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import '../styles/FullScreenHero.css';
+import '../styles/HomeSearch.css';
 
 const shuffleArray = (array) => [...array].sort(() => 0.5 - Math.random());
 
@@ -151,6 +152,53 @@ const Home = () => {
                 }
               </motion.p>
               
+              {/* Search Form */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.7 }}
+                className="hero-search mb-4"
+              >
+                <form onSubmit={handleSearch} className="d-flex justify-content-center">
+                  <div className="input-group" style={{ maxWidth: '500px' }}>
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Search for products..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      style={{
+                        borderRadius: '50px 0 0 50px',
+                        border: '2px solid rgba(255,255,255,0.3)',
+                        background: 'rgba(255,255,255,0.1)',
+                        color: 'white',
+                        fontSize: '1.1rem',
+                        padding: '0.8rem 1.5rem'
+                      }}
+                    />
+                    <button
+                      type="submit"
+                      className="btn btn-light"
+                      disabled={loading}
+                      style={{
+                        borderRadius: '0 50px 50px 0',
+                        border: '2px solid rgba(255,255,255,0.3)',
+                        borderLeft: 'none',
+                        padding: '0.8rem 1.5rem',
+                        fontWeight: '600'
+                      }}
+                    >
+                      {loading ? (
+                        <span className="spinner-border spinner-border-sm me-2"></span>
+                      ) : (
+                        <i className="bi bi-search me-2"></i>
+                      )}
+                      Search
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -195,7 +243,57 @@ const Home = () => {
       </div>
 
       <div className="container mt-5">
-        
+        {/* Search Results Section */}
+        {searchResults.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="search-results mb-5"
+          >
+            <h3 className="mb-4 text-center">
+              Search Results for "{searchQuery}" ({searchResults.length} found)
+            </h3>
+            <div className="row">
+              {searchResults.map((product) => (
+                <motion.div
+                  key={product.id}
+                  className="col-6 col-md-4 col-lg-3 mb-4"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Link to={`/products/${product.id}`} className="text-decoration-none">
+                    <div className="card h-100 shadow-sm">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="card-img-top"
+                        style={{ height: '200px', objectFit: 'cover' }}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{product.name}</h5>
+                        <p className="card-text text-truncate">{product.description}</p>
+                        <p className="fw-bold text-primary">₹{product.price.toLocaleString()}</p>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+            <div className="text-center mt-4">
+              <button 
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  setSearchResults([]);
+                  setSearchQuery('');
+                }}
+              >
+                Clear Search Results
+              </button>
+            </div>
+          </motion.div>
+        )}
 
         {/* ✅ Featured Products Slideshow */}
         <div className="mb-5">

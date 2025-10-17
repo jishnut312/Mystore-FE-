@@ -1,0 +1,24 @@
+/* Home Page Search Styles */
+.hero-search input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.hero-search input:focus {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+}
+
+.hero-search input:focus::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.search-results .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-results .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
